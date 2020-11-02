@@ -10,7 +10,7 @@ let state = {
         id: 2,
         message: 'Its my first post',
         likesCount: 10
-      },
+      }
     ]
   },
   dialogsPage: {
@@ -54,8 +54,8 @@ let state = {
         message: "Yo"
       }
     ]
-  }
-
+  },
+  sidebar: {}
 };
 
 export default state;
