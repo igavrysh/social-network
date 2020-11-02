@@ -4,7 +4,7 @@ import s from './Profile.module.css';
 
 const Profile = () => {
   return (
-    <div className={s.content}>
+    <div>
       <div>
         <img className={s.contentImage} src='https://media.timeout.com/images/100541963/image.jpg' />
       </div>
