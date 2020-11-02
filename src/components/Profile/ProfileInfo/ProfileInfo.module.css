@@ -1,0 +1,12 @@
+.content {
+  grid-area: c;
+  background-color: blue;
+}
+
+.contentImage {
+  width: 400px;
+}
+
+.descriptionBlock {
+  padding: 10px;
+}
