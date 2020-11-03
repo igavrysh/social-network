@@ -7,7 +7,6 @@ import Dialogs from './components/Dialogs/Dialogs';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 const App = (props) => {
-
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
@@ -21,13 +20,11 @@ const App = (props) => {
             render={() => {
               return <Profile
                 profilePage={props.state.profilePage}
-                addPost={props.addPost}
-                updateNewPostText={props.updateNewPostText} />
+                dispatch={props.dispatch} />
             }} />
         </div>
       </div>
     </BrowserRouter>
-
   );
 }
 
