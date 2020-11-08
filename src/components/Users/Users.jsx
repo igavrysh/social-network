@@ -7,14 +7,18 @@ class Users extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.isUsersLoading = false;
     this.getUsers();
   }
 
   getUsers = () => {
+    debugger;
+    this.isUsersLoading = true;
+
     let url = 'https://social-network.samuraijs.com/api/1.0/users';
     Axios.get(url)
       .then(response => {
+        this.isUsersLoading = false;
         this.props.setUsers(response.data.items);
       });
   }
