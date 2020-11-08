@@ -10,7 +10,7 @@ import {
   toggleIsFetchingAC
 } from '../../redux/users-reducer';
 import Users from './Users';
-import preloader from './../../assets/images/preloader.svg'
+import Preloader from '../common/Preloader/Preloader';
 
 class UsersContainer extends React.Component {
 
@@ -40,9 +40,7 @@ class UsersContainer extends React.Component {
     return (
       <>
         { this.props.isFetching
-          ? <div style={{backgroundColor: 'white'}}>
-              <img src={preloader} />
-            </div>
+          ? <Preloader />
           : null
         }
         <Users
