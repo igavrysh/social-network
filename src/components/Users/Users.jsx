@@ -1,9 +1,18 @@
+import * as Axios from 'axios';
 import React from 'react';
-import s from './users.module.css'
+import s from './users.module.css';
+import userPhoto from '../../assets/images/user_avatar1.jpg'
 
 let Users = (props) => {
 
   if (props.users.length === 0) {
+    let url = 'https://social-network.samuraijs.com/api/1.0/users';
+    Axios.get(url)
+      .then(response => {
+        props.setUsers(response.data.items);
+      });
+
+      /*
     props.setUsers([
       {
         id: 1,
@@ -40,6 +49,7 @@ let Users = (props) => {
       },
     ]
     );
+    */
   }
 
   return <div>
@@ -49,7 +59,7 @@ let Users = (props) => {
           <span>
             <div>
               <div className={s.userPhoto}>
-                <img src={u.photoUrl} alt='' />
+                <img src={u.photos.small != null ? u.photos.small : userPhoto } alt='' />
               </div>
             </div>
             <div>
@@ -63,12 +73,12 @@ let Users = (props) => {
           </span>
           <span>
             <span>
-              <div>{u.fullName}</div>
+              <div>{u.name}</div>
               <div>{u.status}</div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              <div>{"u.location.country"}</div>
+              <div>{"u.location.city"}</div>
             </span>
           </span>
         </div>
