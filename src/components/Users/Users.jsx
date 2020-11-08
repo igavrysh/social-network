@@ -6,15 +6,12 @@ import userPhoto from '../../assets/images/user_avatar1.jpg'
 class Users extends React.Component {
 
   componentDidMount() {
-    this.getUsers();
-  }
-
-  getUsers = () => {
     let url = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
     Axios.get(url)
       .then(response => {
         this.isUsersLoading = false;
-        this.props.setUsers(response.data.items, response.data.totalCount);
+        this.props.setUsers(response.data.items);
+        this.props.setTotalUsersCount(response.data.totalCount);
       });
   }
 
@@ -62,7 +59,6 @@ class Users extends React.Component {
                     ? <button onClick={() => { this.props.unfollow(u.id) }}>Unfollow</button>
                     : <button onClick={() => { this.props.follow(u.id) }}>Follow</button>
                 }
-
               </div>
             </span>
             <span>
