@@ -9,10 +9,13 @@ const ProfileInfo = (props) => {
   return (
     <div>
       <div>
-        <img className={s.contentImage} src='https://media.timeout.com/images/100541963/image.jpg' alt=''/>
+        <img 
+          className={s.contentImage} 
+          src='https://media.timeout.com/images/100541963/image.jpg' 
+          alt='' />
       </div>
       <div className={s.descriptionBlock}>
-        <img src={props.profile.photos.large} />
+        <img src={props.profile.photos.large} alt='' />
         ava+description
       </div>
     </div>
