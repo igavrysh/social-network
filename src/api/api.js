@@ -1,4 +1,5 @@
 import * as Axios from 'axios';
+import { follow } from '../redux/users-reducer';
 
 const instance = Axios.create({
   withCredentials: true,
@@ -9,9 +10,21 @@ const instance = Axios.create({
 });
 
 export const usersAPI = {
+
   getUsers (currentPage = 1, pageSize = 10) {
     let url = `users?page=${currentPage}&count=${pageSize}`;
-    return instance.get(url, { withCredentials: true })
+    return instance.get(url)
       .then(response => response.data);
-  } 
+  },
+
+  follow(userId) {
+    let url = `follow/${userId}`;
+    return instance.post(url, {});
+  },
+
+  unfollow(userId) {
+    let url = `follow/${userId}`;
+    return instance.delete(url);
+  }
+
 }
