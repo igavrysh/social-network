@@ -39,7 +39,8 @@ let Users = (props) => {
               <div>
                 {
                   u.followed
-                    ? <button onClick={() => {
+                    ? <button disabled={props.followingInProgress} onClick={() => {
+                      props.toggleFollowingProgress(true);
                       let url = `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`;
                       Axios.delete(url, { 
                         withCredentials: true,
@@ -51,9 +52,12 @@ let Users = (props) => {
                           if (response.data.resultCode == 0) {
                             props.unfollow(u.id);
                           }
+                          props.toggleFollowingProgress(false);
+
                         });
                     }}>Unfollow</button>
-                    : <button onClick={() => {
+                    : <button disabled={props.followingInProgress} onClick={() => {
+                      props.toggleFollowingProgress(true);
                       let url = `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`;
                       Axios.post(url, {}, { 
                         withCredentials: true,
@@ -65,6 +69,7 @@ let Users = (props) => {
                           if (response.data.resultCode === 0) {
                             props.follow(u.id);
                           }
+                          props.toggleFollowingProgress(false);
                         });
                     }}>Follow</button>
                 }
