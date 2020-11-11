@@ -10,7 +10,7 @@ const instance = Axios.create({
 
 export const usersAPI = {
 
-  getUsers (currentPage = 1, pageSize = 10) {
+  getUsers(currentPage = 1, pageSize = 10) {
     let url = `users?page=${currentPage}&count=${pageSize}`;
     return instance.get(url)
       .then(response => response.data);
@@ -24,6 +24,16 @@ export const usersAPI = {
   unfollow(userId) {
     let url = `follow/${userId}`;
     return instance.delete(url);
+  }
+
+}
+
+export const profileAPI = {
+
+  getUserProfile(userId) {
+    let url = `profile/${userId}`;
+    return instance.get(url)
+      .then(response => response.data);
   }
 
 }
