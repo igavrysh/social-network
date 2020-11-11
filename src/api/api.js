@@ -30,10 +30,16 @@ export const usersAPI = {
 
 export const profileAPI = {
 
-  getUserProfile(userId) {
+  getProfile(userId) {
     let url = `profile/${userId}`;
     return instance.get(url)
       .then(response => response.data);
   }
+}
 
+export const authAPI = {
+  me() {
+    let url = `auth/me`;
+    return instance.get(url)
+  }
 }
