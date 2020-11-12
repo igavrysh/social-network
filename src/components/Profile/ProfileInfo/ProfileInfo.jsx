@@ -1,6 +1,7 @@
 import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -13,6 +14,7 @@ const ProfileInfo = (props) => {
           className={s.contentImage} 
           src='https://media.timeout.com/images/100541963/image.jpg' 
           alt='' />
+        <ProfileStatus status={'Hello my friedns'} />
       </div>
       <div className={s.descriptionBlock}>
         <img src={props.profile.photos.large} alt='' />
@@ -53,6 +55,7 @@ const ProfileInfo = (props) => {
               : <div>Currently, not looking for a job</div>
           }
         </div>
+        
       </div>
     </div>
   );

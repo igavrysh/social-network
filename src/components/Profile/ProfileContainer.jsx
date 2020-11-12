@@ -36,6 +36,6 @@ export default compose(
       getUserProfile
     }
   ),
-  withRouter,
-  withAuthRedirect
+  withRouter//,
+  //withAuthRedirect
 )(ProfileContainer);
