@@ -31,19 +31,32 @@ export const usersAPI = {
 export const profileAPI = {
 
   getProfile(userId) {
+    console.log('start getting profile');
     let url = `profile/${userId}`;
     return instance.get(url)
-      .then(response => response.data);
+      .then(response => {
+        console.log('finished getting profile');
+        return response.data;
+      });
   },
 
   getStatus(userId) {
+    console.log('start getting status');
     let url = `profile/status/${userId}`;
-    return instance.get(url);
+    return instance.get(url).then(status => {
+      console.log('finised getting status');
+      return status;
+    });
   },
 
   updateStatus(status) {
+    console.log('start putting status');
     let url = `profile/status`;
-    return instance.put(url, {status: status});
+    return instance.put(url, {status: status})
+      .then(status => {
+        console.log('finish putting status');
+        return status;
+      });
   }
 }
 
