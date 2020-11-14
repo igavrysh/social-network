@@ -10,11 +10,13 @@ const ProfileInfo = (props) => {
   return (
     <div>
       <div>
-        <img 
-          className={s.contentImage} 
-          src='https://media.timeout.com/images/100541963/image.jpg' 
+        <img
+          className={s.contentImage}
+          src='https://media.timeout.com/images/100541963/image.jpg'
           alt='' />
-        <ProfileStatus status={'Hello my friedns'} />
+        <ProfileStatus 
+          status={props.status} 
+          updateStatus={props.updateStatus} />
       </div>
       <div className={s.descriptionBlock}>
         <img src={props.profile.photos.large} alt='' />
@@ -49,13 +51,13 @@ const ProfileInfo = (props) => {
           {props.profile.contacts.youtube}
         </div>
         <div>
-          { 
+          {
             props.profile.lookingForAJob
               ? <div>{props.profile.lookingForAJobDescription}</div>
               : <div>Currently, not looking for a job</div>
           }
         </div>
-        
+
       </div>
     </div>
   );
