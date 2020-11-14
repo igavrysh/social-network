@@ -31,30 +31,24 @@ export const usersAPI = {
 export const profileAPI = {
 
   getProfile(userId) {
-    console.log('API: start getting profile');
     let url = `profile/${userId}`;
     return instance.get(url)
       .then(response => {
-        console.log('API: finished getting profile');
         return response.data;
       });
   },
 
   getStatus(userId) {
-    console.log('API: start getting status');
     let url = `profile/status/${userId}`;
     return instance.get(url).then(status => {
-      console.log('finised getting status');
       return status;
     });
   },
 
   updateStatus(status) {
-    console.log('API: start putting status');
     let url = `API: profile/status`;
     return instance.put(url, {status: status})
       .then(status => {
-        console.log('API: finish putting status');
         return status;
       });
   }

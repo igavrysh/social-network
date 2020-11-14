@@ -44,14 +44,12 @@ const profileReducer = (state = initialState, action) => {
       };
     }
     case SET_USER_PROFILE: {
-      console.log('SET_USER_PROFILE reducer');
       return {
         ...state,
         profile: action.profile
       };
     }
     case SET_STATUS:
-      console.log('SET_STATUS reducer');
       return {
         ...state,
         status: action.status
