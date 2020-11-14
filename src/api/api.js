@@ -31,17 +31,17 @@ export const usersAPI = {
 export const profileAPI = {
 
   getProfile(userId) {
-    console.log('start getting profile');
+    console.log('API: start getting profile');
     let url = `profile/${userId}`;
     return instance.get(url)
       .then(response => {
-        console.log('finished getting profile');
+        console.log('API: finished getting profile');
         return response.data;
       });
   },
 
   getStatus(userId) {
-    console.log('start getting status');
+    console.log('API: start getting status');
     let url = `profile/status/${userId}`;
     return instance.get(url).then(status => {
       console.log('finised getting status');
@@ -50,11 +50,11 @@ export const profileAPI = {
   },
 
   updateStatus(status) {
-    console.log('start putting status');
-    let url = `profile/status`;
+    console.log('API: start putting status');
+    let url = `API: profile/status`;
     return instance.put(url, {status: status})
       .then(status => {
-        console.log('finish putting status');
+        console.log('API: finish putting status');
         return status;
       });
   }
