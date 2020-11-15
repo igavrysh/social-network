@@ -46,7 +46,7 @@ export const profileAPI = {
   },
 
   updateStatus(status) {
-    let url = `API: profile/status`;
+    let url = `profile/status`;
     return instance.put(url, {status: status})
       .then(status => {
         return status;
