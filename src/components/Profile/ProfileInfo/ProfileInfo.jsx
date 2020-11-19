@@ -1,7 +1,7 @@
 import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -14,7 +14,7 @@ const ProfileInfo = (props) => {
           className={s.contentImage}
           src='https://media.timeout.com/images/100541963/image.jpg'
           alt='' />
-        <ProfileStatus 
+        <ProfileStatusWithHooks 
           status={props.status} 
           updateStatus={props.updateStatus} />
       </div>
