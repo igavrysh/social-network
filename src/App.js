@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
