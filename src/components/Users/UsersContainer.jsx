@@ -32,6 +32,7 @@ class UsersContainer extends React.Component {
   }
 
   render() {
+    console.log('RENDER USERS');
     return (
       <>
         { this.props.isFetching
@@ -67,6 +68,7 @@ let mapStateToProps = (state) => {
 */
 
 let mapStateToProps = (state) => {
+  console.log('mapStateToProps USERS');
   return {
     users: getUsers(state),
     pageSize: getPageSize(state),
