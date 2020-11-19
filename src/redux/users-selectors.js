@@ -3,7 +3,6 @@ export const getUsers = (state) => {
 }
 
 export const getPageSize = (state) => {
-  debugger;
   return state.usersPage.pageSize;
 }
 

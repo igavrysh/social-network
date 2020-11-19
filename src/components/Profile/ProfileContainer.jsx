@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component {
       userId = this.props.authorizedUserId;
       if (!userId) {
         this.props.history.push('/login');
+        return;
       }
     }
     this.props.getUserProfile(userId);
@@ -24,6 +25,7 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
+    //console.log('RENDER PROFILE');
     return (
       <Profile {...this.props} 
         profile={this.props.profile} 
@@ -34,6 +36,7 @@ class ProfileContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => {
+  //console.log('mapStateToProps');
   return {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
