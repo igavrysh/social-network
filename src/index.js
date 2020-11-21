@@ -6,22 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 
-
-setInterval(
-  () => {
-    store.dispatch({type: 'FAKE'})
-  },
-  1000); 
-
-
 export let rerenderEntireTree = (state) => {
   ReactDOM.render(
     //<React.StrictMode>
       <Provider store={store}>
         <App />
       </Provider>
-    //</React.StrictMode>,
+    //</React.StrictMode>
     ,
+    
     document.getElementById('root')
   );
 }
