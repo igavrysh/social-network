@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Field, reduxForm } from 'redux-form';
@@ -26,17 +26,7 @@ const AddNewPostForm = (props) => {
 
 const AddNewPostFormRedux = reduxForm({ form: 'ProfileAddNewPostForm' })(AddNewPostForm);
 
-class MyPosts extends Component {
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({a: 12});
-    }, 3000);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps != this.props || nextState != this.state;
-  }
+class MyPosts extends PureComponent {
 
   render() {
     console.log('RENDER: My Posts');
