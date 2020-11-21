@@ -26,26 +26,39 @@ const AddNewPostForm = (props) => {
 
 const AddNewPostFormRedux = reduxForm({ form: 'ProfileAddNewPostForm' })(AddNewPostForm);
 
-let MyPosts = (props) => {
-  console.log('RENDER: My Posts');
+class MyPosts extends Component {
 
-  let postsElements = props.posts.map(p => {
-    return <Post message={p.message} likesCount={p.likesCount} />
-  });
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({a: 12});
+    }, 3000);
+  }
 
-  let onAddPost = (values) => {
-    props.addPost(values.newPostText);
-  };
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps != this.props || nextState != this.state;
+  }
 
-  return (
-    <div className={s.postsBlock}>
-      <h3>my posts</h3>
-      <AddNewPostFormRedux onSubmit={onAddPost} />
-      <div className={s.posts}>
-        {postsElements}
+  render() {
+    console.log('RENDER: My Posts');
+
+    let postsElements = this.props.posts.map(p => {
+      return <Post message={p.message} likesCount={p.likesCount} />
+    });
+
+    let onAddPost = (values) => {
+      this.props.addPost(values.newPostText);
+    };
+
+    return (
+      <div className={s.postsBlock}>
+        <h3>my posts</h3>
+        <AddNewPostFormRedux onSubmit={onAddPost} />
+        <div className={s.posts}>
+          {postsElements}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default MyPosts;

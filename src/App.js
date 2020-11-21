@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
@@ -23,39 +23,37 @@ class App extends Component {
     }
 
     return (
-      <BrowserRouter>
-        <div className='app-wrapper'>
-          <HeaderContainer />
-          <Navbar />
-          {/* <Profile /> */}
-          <div className='app-wrapper-content'>
-            <Route path="/dialogs"
-              render={() => {
-                return (
-                  <DialogsContainer />
-                );
-              }} />
-            <Route path="/profile/:userId?"
-              render={() => {
-                return (
-                  <ProfileContainer />
-                );
-              }} />
-            <Route path="/users"
-              render={() => {
-                return (
-                  <UsersContainer />
-                );
-              }} />
-            <Route path="/login"
-              render={() => {
-                return (
-                  <LoginPage />
-                );
-              }} />
-          </div>
+      <div className='app-wrapper'>
+        <HeaderContainer />
+        <Navbar />
+        {/* <Profile /> */}
+        <div className='app-wrapper-content'>
+          <Route path="/dialogs"
+            render={() => {
+              return (
+                <DialogsContainer />
+              );
+            }} />
+          <Route path="/profile/:userId?"
+            render={() => {
+              return (
+                <ProfileContainer />
+              );
+            }} />
+          <Route path="/users"
+            render={() => {
+              return (
+                <UsersContainer />
+              );
+            }} />
+          <Route path="/login"
+            render={() => {
+              return (
+                <LoginPage />
+              );
+            }} />
         </div>
-      </BrowserRouter>
+      </div>
     );
   }
 }
