@@ -34,7 +34,7 @@ let MyPosts = React.memo((props) => {
   });
 
   let onAddPost = (values) => {
-    this.props.addPost(values.newPostText);
+    props.addPost(values.newPostText);
   };
 
   return (
