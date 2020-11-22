@@ -3,8 +3,8 @@ import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
 
-const ProfileInfo = (props) => {
-  if (!props.profile) {
+const ProfileInfo = ({profile, status, updateStatus}) => {
+  if (!profile) {
     return <Preloader />
   }
   return (
@@ -15,45 +15,45 @@ const ProfileInfo = (props) => {
           src='https://media.timeout.com/images/100541963/image.jpg'
           alt='' />
         <ProfileStatusWithHooks 
-          status={props.status} 
-          updateStatus={props.updateStatus} />
+          status={status} 
+          updateStatus={updateStatus} />
       </div>
       <div className={s.descriptionBlock}>
-        <img src={props.profile.photos.large} alt='' />
+        <img src={profile.photos.large} alt='' />
         <div>
-          {props.profile.fullName}
+          {profile.fullName}
         </div>
         <div>
-          {props.profile.aboutMe}
+          {profile.aboutMe}
         </div>
         <div>
-          {props.profile.contacts.facebook}
+          {profile.contacts.facebook}
         </div>
         <div>
-          {props.profile.contacts.github}
+          {profile.contacts.github}
         </div>
         <div>
-          {props.profile.contacts.instagram}
+          {profile.contacts.instagram}
         </div>
         <div>
-          {props.profile.contacts.mainLink}
+          {profile.contacts.mainLink}
         </div>
         <div>
-          {props.profile.contacts.twitter}
+          {profile.contacts.twitter}
         </div>
         <div>
-          {props.profile.contacts.vk}
+          {profile.contacts.vk}
         </div>
         <div>
-          {props.profile.contacts.website}
+          {profile.contacts.website}
         </div>
         <div>
-          {props.profile.contacts.youtube}
+          {profile.contacts.youtube}
         </div>
         <div>
           {
-            props.profile.lookingForAJob
-              ? <div>{props.profile.lookingForAJobDescription}</div>
+            profile.lookingForAJob
+              ? <div>{profile.lookingForAJobDescription}</div>
               : <div>Currently, not looking for a job</div>
           }
         </div>
