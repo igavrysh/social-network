@@ -11,9 +11,6 @@ let User = (
     unfollow
   }
 ) => {
-
-  let u = user;
-
   return (
     <div>
       <span>

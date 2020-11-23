@@ -16,11 +16,11 @@ describe('ProfileStatus component', () => {
     expect(span).not.toBeNull();
   });
 
-  test('after creation <input> shouldn\`t be displayed', () => {
+  test('after creation <input> shouldn\'t be displayed', () => {
     const component = create(<ProfileStatus status='it-kamasutra.com' />);
     const root = component.root;
     expect(() => {
-      let input = root.findByType('input');
+      root.findByType('input');
     }).toThrow();
   });
 
@@ -59,7 +59,7 @@ describe('ProfileStatus component', () => {
         status='it-kamasutra.com'
         updateStatus={mockCallback} />
     );
-    const instance = component.getInstance();
+    component.getInstance();
     expect(mockCallback.mock.calls.length).toBe(0);
   });
 });
