@@ -12,7 +12,6 @@ class ProfileStatus extends React.Component {
       editMode: true,
       status: this.props.status
     });
-    
     //this.forceUpdate();
   }
 
@@ -20,6 +19,11 @@ class ProfileStatus extends React.Component {
     this.setState({
       editMode: false
     });
+    this.props.updateStatus(this.state.status);
+  }
+
+  onStatusChange = (e) => {
+    this.setState({ status: e.currentTarget.value });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -27,17 +31,7 @@ class ProfileStatus extends React.Component {
       this.setState({
         status: this.props.status
       });
-      this.deactivateEditMode();
     }
-  }
-
-  statusEditFormUpdate = (values) => {
-    this.props.updateStatus(values.statusBody);
-    /*
-    this.setState({
-      status: values.statusBody
-    });
-    */
   }
 
   render() {
@@ -45,49 +39,23 @@ class ProfileStatus extends React.Component {
       <div>
         {!this.state.editMode &&
           <div>
-            <span
-              onDoubleClick={this.activateEditMode}>
-              {this.state.status || '---'}
+            <span onDoubleClick={this.activateEditMode}>
+              {this.props.status || '---'}
             </span>
           </div>
         }
         {this.state.editMode &&
           <div>
-            <div>
-              <StatusEditFormRedux 
-                value={this.state.status}
-                onSubmit={this.statusEditFormUpdate}
-                onBlur={this.statusEditFormUpdate} />
-            </div>
+            <input
+              onChange={this.onStatusChange}
+              autoFocus={true}
+              onBlur={this.deactivateEditMode.bind(this)}
+              value={this.state.status} />
           </div>
         }
       </div>
     );
   }
 }
-
-const StatusEditForm = (props) => {
-  return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          component='input'
-          name='statusBody' 
-          value={props.value} />
-      </div>
-      <div>
-        <button>
-          Update
-        </button>
-      </div>
-    </form>
-  )
-}
-
-const StatusEditFormRedux = reduxForm(
-  {
-    form: 'profileStatusEditForm'
-  }
-)(StatusEditForm);
 
 export default ProfileStatus;
