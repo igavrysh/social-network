@@ -2,24 +2,35 @@ import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from './ProfileStatus/ProfileStatusWithHooks';
+import userPhoto from '../../../assets/images/user_avatar.jpg';
 
-const ProfileInfo = ({profile, status, updateStatus}) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
   if (!profile) {
     return <Preloader />
   }
+
+  const onMainPhotoSelected = (e) => {
+    if (e.target.files.length) {
+      savePhoto(e.target.files[0]);
+    }
+  }
+
   return (
     <div>
       <div>
         <img
-          className={s.contentImage}
-          src='https://media.timeout.com/images/100541963/image.jpg'
+          className={s.mainPhoto}
+          src={profile.photos.large || userPhoto}
           alt='' />
+        { isOwner && <input type={'file'} onChange={onMainPhotoSelected} />}
         <ProfileStatusWithHooks 
           status={status} 
           updateStatus={updateStatus} />
       </div>
       <div className={s.descriptionBlock}>
-        <img src={profile.photos.large} alt='' />
+        <div>
+          {profile.userId}
+        </div>
         <div>
           {profile.fullName}
         </div>

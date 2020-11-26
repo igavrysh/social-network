@@ -32,12 +32,11 @@ class UsersContainer extends React.Component {
   }
 
   onPageChanged = (p) => {
-    const {pageSize} = this.props
+    const {pageSize} = this.props;
     this.props.getUsers(p, pageSize);    
   }
 
   render() {
-    console.log('RENDER USERS');
     return (
       <>
         { this.props.isFetching
