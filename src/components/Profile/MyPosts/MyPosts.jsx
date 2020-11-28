@@ -1,9 +1,12 @@
-import React from 'react';
-import s from './MyPosts.module.css';
-import Post from './Post/Post';
-import { Field, reduxForm } from 'redux-form';
-import { maxLengthCreator, required } from '../../../utils/validators/validators';
-import { Textarea } from '../../common/FormsControls/FormsControls';
+import React from "react";
+import s from "./MyPosts.module.css";
+import Post from "./Post/Post";
+import { Field, reduxForm } from "redux-form";
+import {
+  maxLengthCreator,
+  required,
+} from "../../../utils/validators/validators";
+import { Textarea } from "../../common/FormsControls/FormsControls";
 
 const maxLength10 = maxLengthCreator(10);
 
@@ -12,25 +15,28 @@ const AddNewPostForm = (props) => {
     <form onSubmit={props.handleSubmit}>
       <div>
         <Field
-          name='newPostText'
+          name="newPostText"
           component={Textarea}
-          placeholder={'Post message'}
-          validate={[required, maxLength10]} />
+          placeholder={"Post message"}
+          validate={[required, maxLength10]}
+        />
       </div>
       <div>
         <button>Add post</button>
       </div>
     </form>
   );
-}
+};
 
-const AddNewPostFormRedux = reduxForm({ form: 'ProfileAddNewPostForm' })(AddNewPostForm);
+const AddNewPostFormRedux = reduxForm({ form: "ProfileAddNewPostForm" })(
+  AddNewPostForm
+);
 
 let MyPosts = React.memo((props) => {
-  console.log('RENDER: My Posts');
+  console.log("RENDER: My Posts");
 
-  let postsElements = props.posts.map(p => {
-    return <Post message={p.message} likesCount={p.likesCount} />
+  let postsElements = props.posts.map((p) => {
+    return <Post key={p.id} message={p.message} likesCount={p.likesCount} />;
   });
 
   let onAddPost = (values) => {
@@ -41,9 +47,7 @@ let MyPosts = React.memo((props) => {
     <div className={s.postsBlock}>
       <h3>my posts</h3>
       <AddNewPostFormRedux onSubmit={onAddPost} />
-      <div className={s.posts}>
-        {postsElements}
-      </div>
+      <div className={s.posts}>{postsElements}</div>
     </div>
   );
 });

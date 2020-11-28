@@ -56,7 +56,6 @@ export const profileAPI = {
   savePhoto(photoFile) {
     let formData = new FormData();
     formData.append('image', photoFile);
-    debugger;
     return instance.put(
       'profile/photo',
       formData, 
@@ -66,6 +65,10 @@ export const profileAPI = {
         }
       }  
     );
+  },
+
+  saveProfile(profile) {
+    return instance.put('profile', profile );
   }
 
 }

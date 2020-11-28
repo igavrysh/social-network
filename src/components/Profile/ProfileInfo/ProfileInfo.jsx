@@ -3,10 +3,16 @@ import Preloader from "../../common/Preloader/Preloader";
 import s from "./ProfileInfo.module.css";
 import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/user_avatar.jpg";
-import ProfileDataForm from './ProfileDataForm';
+import ProfileDataForm from "./ProfileDataForm";
 
-
-const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto }) => {
+const ProfileInfo = ({
+  profile,
+  status,
+  updateStatus,
+  isOwner,
+  savePhoto,
+  saveProfile,
+}) => {
   let [editMode, setEditMode] = useState(false);
 
   if (!profile) {
@@ -20,8 +26,13 @@ const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto }) => {
   };
 
   const onSubmit = (formData) => {
-    console.log(formData);
-  }
+    saveProfile(formData).then(
+      () => {
+        setEditMode(false);
+      },
+      () => {}
+    );
+  };
 
   return (
     <div>
@@ -34,9 +45,11 @@ const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto }) => {
         {isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
 
         {editMode ? (
-          <ProfileDataForm 
-            profile={profile} 
-            onSubmit={onSubmit} />
+          <ProfileDataForm
+            initialValues={profile}
+            profile={profile}
+            onSubmit={onSubmit}
+          />
         ) : (
           <ProfileData
             goToEditMode={() => {
