@@ -151,7 +151,15 @@ export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingActionTyp
   }
 );
 
-export const toggleFollowingProgress = (isFetching: boolean, userId: number) => (
+type ToggleIsFollowingProgressActionType = {
+  type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
+  isFetching: boolean
+  userId: number
+}
+
+export const toggleFollowingProgress = (
+  isFetching: boolean, 
+  userId: number): ToggleIsFollowingProgressActionType => (
   {
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
