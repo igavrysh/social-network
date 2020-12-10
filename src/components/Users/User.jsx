@@ -11,6 +11,7 @@ let User = (
     unfollow
   }
 ) => {
+  console.log(user)
   return (
     <div>
       <span>
@@ -45,10 +46,6 @@ let User = (
         <span>
           <div>{user.name}</div>
           <div>{user.status}</div>
-        </span>
-        <span>
-          <div>{"user.location.country"}</div>
-          <div>{"user.location.city"}</div>
         </span>
       </span>
     </div>
