@@ -1,5 +1,4 @@
-import { Action, Dispatch } from "redux";
-import { ActionTypes } from "redux-form";
+import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { usersAPI } from "../api/api";
 import { UserType } from "../types/types";
@@ -179,7 +178,7 @@ export const toggleFollowingProgress = (
   }
 )
 
-type GetStateType = () => AppStateType
+//type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsTypes>
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 

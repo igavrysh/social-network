@@ -1,6 +1,7 @@
-import * as Axios from "axios";
+import axios from "axios";
+import { ProfileType } from "../types/types";
 
-const instance = Axios.create({
+const instance = axios.create({
   withCredentials: true,
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   headers: {
@@ -14,40 +15,40 @@ export const usersAPI = {
     return instance.get(url).then((response) => response.data);
   },
 
-  follow(userId) {
+  follow(userId: number) {
     let url = `follow/${userId}`;
     return instance.post(url, {});
   },
 
-  unfollow(userId) {
+  unfollow(userId: number) {
     let url = `follow/${userId}`;
     return instance.delete(url);
   },
 };
 
 export const profileAPI = {
-  getProfile(userId) {
+  getProfile(userId: number) {
     let url = `profile/${userId}`;
     return instance.get(url).then((response) => {
       return response.data;
     });
   },
 
-  getStatus(userId) {
+  getStatus(userId: number) {
     let url = `profile/status/${userId}`;
     return instance.get(url).then((status) => {
       return status;
     });
   },
 
-  updateStatus(status) {
+  updateStatus(status: string) {
     let url = `profile/status`;
     return instance.put(url, { status: status }).then((status) => {
       return status;
     });
   },
 
-  savePhoto(photoFile) {
+  savePhoto(photoFile: any) {
     let formData = new FormData();
     formData.append("image", photoFile);
     return instance.put("profile/photo", formData, {
@@ -57,19 +58,50 @@ export const profileAPI = {
     });
   },
 
-  saveProfile(profile) {
+  saveProfile(profile: ProfileType) {
     return instance.put("profile", profile);
   },
 };
 
+export enum ResultCodesEnum {
+  Success = 0,
+  Error = 1,
+}
+
+export enum ResultCodeForCaptcha {
+  CaptchaIsRequired = 10
+}
+
+type MeResponseType = {
+  data: { 
+    id: number, 
+    email: string, 
+    login: string
+  }
+  resultCode: ResultCodesEnum
+  messages: Array<string>
+}
+
+export type LoginResponseType = {
+  date: {
+    userId: number
+  }
+  resultCode: ResultCodesEnum | ResultCodeForCaptcha
+  messages: Array<string>
+}
+
 export const authAPI = {
   me() {
     let url = `auth/me`;
-    return instance.get(url);
+    return instance.get<MeResponseType>(url).then(res => res.data);
   },
 
-  login(email, password, rememberMe, captcha = null) {
-    return instance.post("auth/login", { email, password, rememberMe, captcha });
+  login(email: string, password: string, rememberMe: boolean, captcha: string | null = null) {
+    return instance
+      .post<LoginResponseType>(
+        "auth/login", 
+        { email, password, rememberMe, captcha })
+      .then(res => res.data);
   },
 
   logout() {
