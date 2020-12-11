@@ -57,7 +57,7 @@ class App extends Component {
             <Route
               path="/users"
               render={() => {
-                return <UsersContainer pageTitle={'Samurai'} />;
+                return <UsersContainer pageTitle={'SAMURAI'} />;
               }}
             />
 

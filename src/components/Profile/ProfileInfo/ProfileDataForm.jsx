@@ -1,7 +1,7 @@
 import React from "react";
 import { reduxForm } from "redux-form";
 import {
-  CreateField,
+  createField,
   Input,
   Textarea,
 } from "../../common/FormsControls/FormsControls";
@@ -16,16 +16,16 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
       </div>
       {error && <div className={style.formSummaryError}>{error}</div>}
       <div>
-        <b>Full name</b>: {CreateField("Full name", "fullName", [], Input)}
+        <b>Full name</b>: {createField("Full name", "fullName", [], Input)}
       </div>
       <div>
         <b>Looking for a job</b>:
-        {CreateField("", "lookingForAJob", [], Input, { type: "checkbox" })}
+        {createField("", "lookingForAJob", [], Input, { type: "checkbox" })}
       </div>
 
       <div>
         <b>My professional skills</b>:
-        {CreateField(
+        {createField(
           "My professional skills",
           "lookingForAJobDescription",
           [],
@@ -34,7 +34,7 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
       </div>
 
       <div>
-        <b>About me</b>:{CreateField("About me", "aboutMe", [], Textarea)}
+        <b>About me</b>:{createField("About me", "aboutMe", [], Textarea)}
       </div>
 
       <div>
@@ -43,7 +43,7 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
           return (
             <div key={key} className={s.contact}>
               <b>
-                {key}: {CreateField(key, "contacts." + key, [], Input)}
+                {key}: {createField(key, "contacts." + key, [], Input)}
               </b>
             </div>
           );
