@@ -16,11 +16,11 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPro
  = ({ handleSubmit, error, captchaUrl }) => {
   return (
     <form onSubmit={handleSubmit}>
-      {createField("Email", "email", [required], Input)}
-      {createField("Password", "password", [required], Input, {
+      {createField<LoginFormValuesTypeKeys>("Email", "email", [required], Input)}
+      {createField<LoginFormValuesTypeKeys>("Password", "password", [required], Input, {
         type: "password",
       })}
-      {createField(
+      {createField<LoginFormValuesTypeKeys>(
         undefined,
         "rememberMe",
         [],
@@ -61,6 +61,8 @@ type LoginFormValuesType = {
   password: string
   email: string
 }
+
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>
 
 const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
   const onSubmit = (formData: LoginFormValuesType) => {
