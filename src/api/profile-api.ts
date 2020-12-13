@@ -1,5 +1,9 @@
-import { instance } from './api'
-import { ProfileType } from "../types/types";
+import { instance, APIResponseType } from './api'
+import { PhotosType, ProfileType } from "../types/types";
+
+type SavePhotoResponseDataType = {
+  photos: PhotosType
+}
 
 export const profileAPI = {
   getProfile(userId: number) {
@@ -10,29 +14,32 @@ export const profileAPI = {
 
   getStatus(userId: number) {
     let url = `profile/status/${userId}`;
-    return instance.get(url).then((status) => {
-      return status;
-    });
+    return instance.get<string>(url)
+      .then(res => res.data);
   },
 
   updateStatus(status: string) {
     let url = `profile/status`;
-    return instance.put(url, { status: status }).then((status) => {
-      return status;
-    });
+    return instance.put<APIResponseType>(url, { status: status })
+      .then(res => res.data);
   },
 
   savePhoto(photoFile: any) {
     let formData = new FormData();
     formData.append("image", photoFile);
-    return instance.put("profile/photo", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return instance.put<APIResponseType<SavePhotoResponseDataType>>(
+      "profile/photo", 
+      formData, 
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(res => res.data);
   },
 
   saveProfile(profile: ProfileType) {
-    return instance.put("profile", profile);
+    return instance.put<APIResponseType>("profile", profile)
+      .then(res => res.data);
   },
 };
