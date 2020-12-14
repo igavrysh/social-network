@@ -4,9 +4,6 @@ import { ResultCodeForCaptchaEnum, ResultCodesEnum } from '../api/api'
 import { securityAPI } from "../api/security-api";
 import { BaseThunkType, InferActionsTypes } from "./redux-store";
 
-const SET_USER_DATA = "samurai-network/auth/SET_USER_DATA";
-const GET_CAPTCHA_URL_SUCCES = "samurai-network/auth/GET_CAPTCHA_URL_SUCCES";
-
 let initialState = {
   userId: null as number | null,
   email: null as string | null,
@@ -15,10 +12,10 @@ let initialState = {
   captchaUrl: null as string | null, // if null, then captcha is not required
 };
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case SET_USER_DATA:
-    case GET_CAPTCHA_URL_SUCCES:
+    case 'SN/auth/SET_USER_DATA':
+    case 'SN/auth/GET_CAPTCHA_URL_SUCCES':
       return {
         ...state,
         ...action.payload,
@@ -62,7 +59,7 @@ export const actions = {
     isAuth: boolean, 
     captchaUrl: string | null) => {
     return {
-      type: SET_USER_DATA,
+      type: 'SN/auth/SET_USER_DATA',
       payload: {
         userId,
         email,
@@ -75,7 +72,7 @@ export const actions = {
 
   getCaptchaUrlSuccess: (captchaUrl: string) => {
     return {
-      type: GET_CAPTCHA_URL_SUCCES,
+      type: 'SN/auth/GET_CAPTCHA_URL_SUCCES',
       payload: {
         captchaUrl,
       },
@@ -113,14 +110,14 @@ export const login = (
   }
 };
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): ThunkType => async (dispatch) => {
   let response = await authAPI.logout();
   if (response.data.resultCode === 0) {
     dispatch(actions.setAuthUserData(null, null, null, false, null));
   }
 };
 
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
   let data = await securityAPI.getCaptchaUrl();
   const captchaUrl = data.url;
   dispatch(actions.getCaptchaUrlSuccess(captchaUrl));
