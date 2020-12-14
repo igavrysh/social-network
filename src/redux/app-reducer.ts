@@ -1,12 +1,12 @@
 import { getAuthUserData } from "./auth-reducer";
-import { InferActionsTypes } from "./redux-store";
+//import { InferActionsTypes } from "./redux-store";
 
 let initialState = {
   initialized: false
 };
 
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actions>
+//type ActionsType = InferActionsTypes<typeof actions>
 
 const appReducer = (
   state: InitialStateType = initialState, 

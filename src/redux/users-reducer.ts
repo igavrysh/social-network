@@ -1,9 +1,8 @@
 import { Dispatch } from "redux"
-import { ThunkAction } from "redux-thunk"
 import { usersAPI } from "../api/users-api"
 import { UserType } from "../types/types"
 import { updateObjectInArray } from "../utils/object-helpers"
-import { AppStateType, InferActionsTypes } from "./redux-store"
+import { BaseThunkType, InferActionsTypes } from "./redux-store"
 
 let initialState = {
   users: [] as Array<UserType>,
@@ -76,7 +75,6 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialState 
 
 type ActionsTypes = InferActionsTypes<typeof actions>
 
-
 export const actions = {
   followSuccess: (userId: number) => {
     return {
@@ -131,7 +129,7 @@ export const actions = {
 
 //type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsTypes>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+type ThunkType = BaseThunkType<ActionsTypes>
 
 export const requestUsers = (
   page: number, 
