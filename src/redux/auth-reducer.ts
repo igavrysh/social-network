@@ -98,9 +98,8 @@ export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
   dispatch(actions.getCaptchaUrlSuccess(captchaUrl));
 };
 
+export default authReducer;
 
 export type InitialStateType = typeof initialState;
 type ActionsType = InferActionsTypes<typeof actions>
 type ThunkType = BaseThunkType<ActionsType | ReturnType<typeof stopSubmit>>
-
-export default authReducer;

@@ -5,9 +5,6 @@ let initialState = {
   initialized: false
 };
 
-export type InitialStateType = typeof initialState
-//type ActionsType = InferActionsTypes<typeof actions>
-
 const appReducer = (
   state: InitialStateType = initialState, 
   action: any): InitialStateType => {
@@ -40,4 +37,5 @@ export const initializeApp = () => (dispatch: any) => {
 
 export default appReducer;
 
-
+export type InitialStateType = typeof initialState
+//type ActionsType = InferActionsTypes<typeof actions>

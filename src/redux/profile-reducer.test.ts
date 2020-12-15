@@ -1,9 +1,5 @@
-import 
-  profileReducer, 
-  { 
-    addPostActionCreator, 
-    deletePost 
-  } from './profile-reducer';
+import profileReducer, { actions } from './profile-reducer'
+import { ProfileType } from '../types/types'
 
 let state = {
   posts: [
@@ -18,13 +14,14 @@ let state = {
       likesCount: 10
     }
   ],
-  profile: null,
-  status: ''
+  profile: null as ProfileType | null,
+  status: '',
+  newPostText: ''
 };
 
 it('new post should be added', () => {
   // 1. test data
-  let action = addPostActionCreator('it-kamasutra.com');
+  let action = actions.addPostActionCreator('it-kamasutra.com');
 
 
   // 2. action 
@@ -36,7 +33,7 @@ it('new post should be added', () => {
 
 it('message of new post should be correct', () => {
   // 1. test data
-  let action = addPostActionCreator('it-kamasutra.com');
+  let action = actions.addPostActionCreator('it-kamasutra.com');
 
   // 2. action 
   let newState = profileReducer(state, action);
@@ -48,7 +45,7 @@ it('message of new post should be correct', () => {
 
 it('after deleting length of messages should be decremented', () => {
   // 1. test data
-  let action = deletePost(1);
+  let action = actions.deletePost(1);
 
   // 2. action 
   let newState = profileReducer(state, action);
@@ -59,7 +56,7 @@ it('after deleting length of messages should be decremented', () => {
 
 it('after deleting non-existing post id, length of messages should not be decremented', () => {
   // 1. test data
-  let action = deletePost(42);
+  let action = actions.deletePost(42);
 
   // 2. action 
   let newState = profileReducer(state, action);

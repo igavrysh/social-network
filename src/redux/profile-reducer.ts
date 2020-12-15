@@ -1,12 +1,13 @@
-import { stopSubmit } from 'redux-form';
+import { FormAction, stopSubmit } from 'redux-form';
 import { profileAPI } from '../api/profile-api';
 import { PostType, ProfileType, PhotosType } from '../types/types';
+import { BaseThunkType, InferActionsTypes } from './redux-store';
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
-const DELETE_POST = 'DELETE_POST';
-const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
+const ADD_POST = 'SN/PROFILE/ADD-POST';
+const SET_USER_PROFILE = 'SN/PROFILE/SET_USER_PROFILE';
+const SET_STATUS = 'SN/PROFILE/SET_STATUS';
+const DELETE_POST = 'SN/PROFILE/DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'SN/PROFILE/SAVE_PHOTO_SUCCESS';
 
 let initialState = {
   posts: [
@@ -18,9 +19,7 @@ let initialState = {
   newPostText: ''
 }
 
-export type InitialStateType = typeof initialState
-
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_POST: {
       let newPost = {
@@ -66,61 +65,42 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
   }
 };
 
-type AddPostActionCreatorActionType = {
-  type: typeof ADD_POST
-  newPostText: string
+export const actions = {
+  addPostActionCreator: (newPostText: string) => ({
+    type: ADD_POST,
+    newPostText,
+  } as const),
+
+  setUserProfile: (profile: ProfileType) => ({
+    type: SET_USER_PROFILE,
+    profile,
+  } as const),
+
+  setStatus: (status: string) => ({ type: SET_STATUS, status: status } as const),
+
+  deletePost: (postId: number) => ({ type: DELETE_POST, postId } as const),
+
+  savePhotoSuccess: (photos: PhotosType) => ({
+    type: SAVE_PHOTO_SUCCESS,
+    photos: photos,
+  } as const)
 }
 
-export const addPostActionCreator = (newPostText: string): AddPostActionCreatorActionType => ({
-  type: ADD_POST,
-  newPostText,
-});
-
-type SetUserProfileActionType = {
-  type: typeof SET_USER_PROFILE
-  profile: ProfileType
-}
-export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({
-  type: SET_USER_PROFILE,
-  profile,
-});
-
-type SetStatusActionType = {
-  type: typeof SET_STATUS
-  status: string
-}
-export const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status: status });
-
-type DeletePostActionType = {
-  type: typeof DELETE_POST
-  postId: number
-}
-export const deletePost = (postId: number): DeletePostActionType => ({ type: DELETE_POST, postId });
-
-type SavePhotosSuccessActionType = {
-  type: typeof SAVE_PHOTO_SUCCESS
-  photos: PhotosType
-}
-export const savePhotoSuccess = (photos: PhotosType): SavePhotosSuccessActionType => ({
-  type: SAVE_PHOTO_SUCCESS,
-  photos: photos,
-});
-
-export const getUserProfile = (userId: number) => async (dispatch: any) => {
+export const getUserProfile = (userId: number): ThunkType => async (dispatch) => {
   let profile = await profileAPI.getProfile(userId);
-  dispatch(setUserProfile(profile));
+  dispatch(actions.setUserProfile(profile));
 };
 
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
   let data = await profileAPI.getStatus(userId);
-  dispatch(setStatus(data));
+  dispatch(actions.setStatus(data));
 };
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
   try {
-    let data = await profileAPI.updateStatus(status);
+    let data = await profileAPI.updateStatus(status)
     if (data.resultCode === 0) {
-      dispatch(setStatus(status));
+      dispatch(actions.setStatus(status))
     }
   } catch(error) {
     // dispatch error and/or rollback state
@@ -128,24 +108,32 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
   }
 };
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
-  let data = await profileAPI.savePhoto(file);
+export const savePhoto = (file: File): ThunkType  => async (dispatch) => {
+  let data = await profileAPI.savePhoto(file)
 
   if (data.resultCode === 0) {
-    dispatch(savePhotoSuccess(data.data.photos));
+    dispatch(actions.savePhotoSuccess(data.data.photos))
   }
 };
 
-export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
   const userId = getState().auth.userId;
-  let data = await profileAPI.saveProfile(profile);
+  let data = await profileAPI.saveProfile(profile)
 
   if (data.resultCode === 0) {
-    dispatch(getUserProfile(userId));
+    if (userId) {
+      dispatch(getUserProfile(userId))
+    } else {
+      throw new Error("userId can't be null")
+    }
   } else {
-    dispatch(stopSubmit('edit-profile', { _error: data.messages[0] }));
+    dispatch(stopSubmit('edit-profile', { _error: data.messages[0] }))
     return Promise.reject(new Error(data.messages[0]));
   }
 };
 
-export default profileReducer;
+export default profileReducer
+
+export type InitialStateType = typeof initialState
+type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType | FormAction> 
