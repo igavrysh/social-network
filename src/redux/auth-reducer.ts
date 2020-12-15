@@ -26,31 +26,6 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
   }
 };
 
-/*
-type SetAuthUserDataActionPayloadType = {
-  userId: number | null
-  email: string | null
-  login: string | null
-  isAuth: boolean
-  captchaUrl: string | null
-}
-
-type SetAuthUserDataActionType = {
-  type: typeof SET_USER_DATA,
-  payload: SetAuthUserDataActionPayloadType
-}
-*/
-
-
-/*
-type GetCaptchaUrlSuccessActionType = {
-  type: typeof GET_CAPTCHA_URL_SUCCES
-  payload: { 
-    captchaUrl: string 
-  }
-}
-*/
-
 export const actions = {
   setAuthUserData: (
     userId: number | null, 
