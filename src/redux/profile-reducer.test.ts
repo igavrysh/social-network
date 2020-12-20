@@ -16,7 +16,6 @@ let state = {
   ],
   profile: null as ProfileType | null,
   status: '',
-  newPostText: ''
 };
 
 it('new post should be added', () => {
