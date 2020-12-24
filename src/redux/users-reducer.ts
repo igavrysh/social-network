@@ -1,4 +1,5 @@
 import { Dispatch } from "redux"
+import { APIResponseType } from "../api/api"
 import { usersAPI } from "../api/users-api"
 import { UserType } from "../types/types"
 import { updateObjectInArray } from "../utils/object-helpers"
@@ -147,35 +148,42 @@ export const requestUsers = (
 const _followUnfollowFlow = async (
   dispatch: DispatchType, 
   userId: number, 
-  apiMethod: any, 
-  actionCreator: (userId: number) => ActionsTypes) => {
-  dispatch(actions.toggleFollowingProgress(true, userId));
-  let response = await apiMethod(userId);
-  if (response.data.resultCode === 0) {
-    dispatch(actionCreator(userId));
+  apiMethod: (userId: number) => Promise<APIResponseType>, 
+  actionCreator: (userId: number) => ActionsTypes
+) => {
+  dispatch(actions.toggleFollowingProgress(true, userId))
+  let response = await apiMethod(userId)
+  if (response.resultCode === 0) {
+    dispatch(actionCreator(userId))
   }
-  dispatch(actions.toggleFollowingProgress(false, userId));
+  dispatch(actions.toggleFollowingProgress(false, userId))
 }
 
 export const follow = (userId: number): ThunkType => {
   return async (dispatch) => {
-    let apiMethod = usersAPI.follow.bind(usersAPI);
-    let actionCreator = actions.followSuccess;
-    _followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
+    await _followUnfollowFlow(
+      dispatch, 
+      userId, 
+      usersAPI.follow.bind(usersAPI), 
+      actions.followSuccess
+    )
   }
 }
 
 export const unfollow = (userId: number): ThunkType => {
   return async (dispatch) => {
-    let apiMethod = usersAPI.unfollow.bind(usersAPI);
-    let actionCreator = actions.unfollowSuccess;
-    _followUnfollowFlow(dispatch, userId, apiMethod, actionCreator);
+    await _followUnfollowFlow(
+      dispatch, 
+      userId, 
+      usersAPI.unfollow.bind(usersAPI), 
+      actions.unfollowSuccess
+    )
   }
 }
 
 export default usersReducer;
 
-type InitialState = typeof initialState;
+export type InitialState = typeof initialState;
 type ActionsTypes = InferActionsTypes<typeof actions>
 type DispatchType = Dispatch<ActionsTypes>
 type ThunkType = BaseThunkType<ActionsTypes>
