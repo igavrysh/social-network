@@ -134,7 +134,8 @@ export const actions = {
 
 export const requestUsers = (
   page: number, 
-  pageSize: number): ThunkType => {
+  pageSize: number
+): ThunkType => {
   return async (dispatch, getState) => {
     dispatch(actions.toggleIsFetching(true));
     dispatch(actions.setCurrentPage(page));
