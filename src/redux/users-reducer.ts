@@ -9,6 +9,7 @@ const FOLLOW = 'SN/USERS/FOLLOW'
 const UNFOLLOW = 'SN/USERS/UNFOLLOW'
 const SET_USERS = 'SN/USERS/SET_USERS'
 const SET_CURRENT_PAGE = 'SN/USERS/SET_CURRENT_PAGE'
+const SET_FILTER = 'SN/USERS/SET_FILTER'
 const SET_TOTAL_USERS_COUNT = 'SN/USERS/SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS'
@@ -19,7 +20,10 @@ let initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
-  followingInProgress: [] as Array<number>  // array of users ids
+  followingInProgress: [] as Array<number>,  // array of users ids
+  filter: {
+    term: ''
+  }
 }
 
 const usersReducer = (state = initialState, action: ActionsTypes): InitialState => {
@@ -28,14 +32,14 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialState 
       return {
         ...state,
         users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
-      };
+      }
     }
 
     case UNFOLLOW: {
       return {
         ...state,
         users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
-      };
+      }
     }
 
     case SET_USERS: {
@@ -63,7 +67,7 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialState 
       return {
         ...state,
         isFetching: action.isFetching
-      };
+      }
     }
 
     case TOGGLE_IS_FOLLOWING_PROGRESS: {
@@ -72,7 +76,14 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialState 
         followingInProgress: action.isFetching
           ? [...state.followingInProgress, action.userId]
           : state.followingInProgress.filter(id => id !== action.userId)
-      };
+      }
+    }
+
+    case SET_FILTER: {
+      return {
+        ...state,
+        filter: action.payload
+      }
     }
 
     default:
@@ -108,6 +119,13 @@ export const actions = {
       currentPage
     } as const
   ),
+
+  setFilter: (term: string) => (
+    {
+      type: SET_FILTER,
+      payload: { term }
+    } as const
+  ),
   
   setTotalUsersCount: (totalUsersCount: number) => (
     {
@@ -134,15 +152,17 @@ export const actions = {
 
 export const requestUsers = (
   page: number, 
-  pageSize: number
+  pageSize: number,
+  term: string
 ): ThunkType => {
   return async (dispatch, getState) => {
-    dispatch(actions.toggleIsFetching(true));
-    dispatch(actions.setCurrentPage(page));
-    let data = await usersAPI.getUsers(page, pageSize);
-    dispatch(actions.toggleIsFetching(false));
-    dispatch(actions.setUsers(data.items));
-    dispatch(actions.setTotalUsersCount(data.totalCount));
+    dispatch(actions.toggleIsFetching(true))
+    dispatch(actions.setCurrentPage(page))
+    dispatch(actions.setFilter(term))
+    let data = await usersAPI.getUsers(page, pageSize)
+    dispatch(actions.toggleIsFetching(false))
+    dispatch(actions.setUsers(data.items))
+    dispatch(actions.setTotalUsersCount(data.totalCount))
   }
 }
 
@@ -184,7 +204,8 @@ export const unfollow = (userId: number): ThunkType => {
 
 export default usersReducer;
 
-export type InitialState = typeof initialState;
+export type InitialState = typeof initialState
+export type FilterType = typeof initialState.filter
 type ActionsTypes = InferActionsTypes<typeof actions>
 type DispatchType = Dispatch<ActionsTypes>
 type ThunkType = BaseThunkType<ActionsTypes>

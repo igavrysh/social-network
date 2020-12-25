@@ -1,14 +1,16 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { FilterType } from '../../redux/users-reducer';
 import { UserType } from '../../types/types';
 import Paginator from '../common/Paginator/Paginator';
 import User from './User';
+import UsersSearchForm from './UsersSearchForm';
 
 type PropsType = {
   totalUsersCount: number
   pageSize: number 
   currentPage: number
   onPageChanged: (pageNumber: number) => void
+  onFilterChanged: (term: FilterType) => void
   users: Array<UserType>
   portionSize?: number
   followingInProgress: Array<number>
@@ -22,12 +24,13 @@ let Users: React.FC<PropsType> = (
     totalUsersCount,
     pageSize,
     onPageChanged,
+    onFilterChanged,
     users,
     ...props
   }) => {
   return (
     <div>
-      <UsersSearchForm />
+      <UsersSearchForm onFilterChanged={onFilterChanged}/>
       <Paginator
         currentPage={currentPage}
         onPageChanged={onPageChanged}
@@ -49,42 +52,6 @@ let Users: React.FC<PropsType> = (
       </div>
     </div>
   );
-}
-
-const usersSearchFormValidate = (values: any) => {
-  const errors = {}
-  return errors
-}
-
-type UsersSearcFormObjectType = {
-  term: string
-}
-
-const UsersSearchForm: React.FC = () => {
-  const submit = (
-    values: UsersSearcFormObjectType, 
-    {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}
-  ) => {
-  }
-
-  return <div>
-    <Formik
-      initialValues={{ term: '' }}
-      validate={usersSearchFormValidate}
-      onSubmit={submit}
-    >
-      {({isSubmitting}) => (
-        <Form>
-          <Field type='text' name='term' />
-          <button type='submit'  disabled={isSubmitting}>
-            Find
-          </button>
-        </Form>
-      )
-      }
-    </Formik>
-
-  </div>
 }
 
 export default Users;
