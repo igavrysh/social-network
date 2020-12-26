@@ -35,3 +35,7 @@ export const getFollowingInProgress = (state: AppStateType) => {
 export const getTempSavedUsers = (state: AppStateType) => {
   return state.usersPage.users.filter(u => true);
 }
+
+export const getUsersFilter = (state: AppStateType) => {
+  return state.usersPage.filter
+}

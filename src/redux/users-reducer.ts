@@ -22,7 +22,8 @@ let initialState = {
   isFetching: false,
   followingInProgress: [] as Array<number>,  // array of users ids
   filter: {
-    term: ''
+    term: '',
+    friend: null as null | boolean
   }
 }
 
@@ -120,10 +121,10 @@ export const actions = {
     } as const
   ),
 
-  setFilter: (term: string) => (
+  setFilter: (filter: FilterType) => (
     {
       type: SET_FILTER,
-      payload: { term }
+      payload: filter
     } as const
   ),
   
@@ -153,13 +154,13 @@ export const actions = {
 export const requestUsers = (
   page: number, 
   pageSize: number,
-  term: string
+  filter: FilterType
 ): ThunkType => {
   return async (dispatch, getState) => {
     dispatch(actions.toggleIsFetching(true))
     dispatch(actions.setCurrentPage(page))
-    dispatch(actions.setFilter(term))
-    let data = await usersAPI.getUsers(page, pageSize, term)
+    dispatch(actions.setFilter(filter))
+    let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
     dispatch(actions.toggleIsFetching(false))
     dispatch(actions.setUsers(data.items))
     dispatch(actions.setTotalUsersCount(data.totalCount))
