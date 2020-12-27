@@ -1,17 +1,23 @@
-import "./App.css";
-import React, { Component } from "react";
-import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Redirect, Route, Switch, withRouter } from "react-router-dom";
-import UsersContainer from "./components/Users/UsersContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/Login";
-import { connect } from "react-redux";
-import { initializeApp } from "./redux/app-reducer";
-import Preloader from "./components/common/Preloader/Preloader";
-import { Provider } from "react-redux";
-import store, { AppStateType } from "./redux/redux-store";
-import { withSuspense } from "./hoc/withSuspense";
-import { compose } from "redux";
+import "./App.css"
+import React, { Component } from "react"
+import Navbar from "./components/Navbar/Navbar"
+import { 
+  BrowserRouter, 
+  Redirect, 
+  Route, 
+  Switch, 
+  withRouter 
+} from "react-router-dom";
+import { UsersPage } from "./components/Users/UsersContainer"
+import HeaderContainer from "./components/Header/HeaderContainer"
+import LoginPage from "./components/Login/Login"
+import { connect } from "react-redux"
+import { initializeApp } from "./redux/app-reducer"
+import Preloader from "./components/common/Preloader/Preloader"
+import { Provider } from "react-redux"
+import store, { AppStateType } from "./redux/redux-store"
+import { withSuspense } from "./hoc/withSuspense"
+import { compose } from "redux"
 
 const DialogsContainer = React.lazy(() =>
   import("./components/Dialogs/DialogsContainer")
@@ -68,7 +74,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
             <Route
               path="/users"
               render={() => {
-                return <UsersContainer pageTitle={'SAMURAI'} />;
+                return <UsersPage pageTitle={'SAMURAI'} />;
               }}
             />
 
