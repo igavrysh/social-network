@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InjectedFormProps, reduxForm } from "redux-form";
 import { required } from "../../utils/validators/validators";
 import { createField, GetStringKeys, Input } from "../common/FormsControls/FormsControls";
@@ -42,19 +42,6 @@ const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({
   form: "login",
 })(LoginForm);
 
-type MapStatePropsType = {
-  captchaUrl: string | null
-  isAuth: boolean
-}
-
-type MapDispatchPropsType = {
-  login: (
-    email: string, 
-    password: string, 
-    rememberMe: boolean, 
-    captcha: string) => void
-}
-
 type LoginFormValuesType = {
   captcha: string
   rememberMe: boolean
@@ -64,29 +51,27 @@ type LoginFormValuesType = {
 
 type LoginFormValuesTypeKeys = GetStringKeys<LoginFormValuesType>
 
-const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+export const LoginPage: React.FC = (props) => {
+  const captchaUrl = useSelector((state: AppStateType) => state.auth.captchaUrl)
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+  const dispatch = useDispatch()
+
   const onSubmit = (formData: LoginFormValuesType) => {
-    console.log(formData);
-    props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);
+    dispatch(login(
+      formData.email, 
+      formData.password, 
+      formData.rememberMe, 
+      formData.captcha))
   };
 
-  if (props.isAuth) {
+  if (isAuth) {
     return <Redirect to={"/profile"} />;
   }
 
   return (
     <div>
       <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
+      <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl} />
     </div>
   );
 };
-
-const mapStateToProps = (state: AppStateType) => {
-  return {
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl,
-  };
-};
-
-export default connect(mapStateToProps, { login })(Login);
