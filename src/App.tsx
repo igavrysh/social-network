@@ -141,47 +141,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
           <Footer style={{ textAlign: 'center' }}>Samurai Social Network ©2020 Created by igavrysh</Footer>
         </Layout>
 
-    );
-
-    /*
-    return (
-      <div className="app-wrapper">
-        <HeaderContainer />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to={"/profile"} />} />
-
-            <Route path="/dialogs" render={() => <SuspendedDialogs />} />
-
-            <Route
-              path="/profile/:userId?"
-              render={() => <SuspendedProfile />}
-            />
-
-            <Route
-              path="/users"
-              render={() => {
-                return <UsersPage pageTitle={'SAMURAI'} />;
-              }}
-            />
-
-            <Route
-              path="/login"
-              render={() => {
-                return <LoginPage />;
-              }}
-            />
-            <Route path="*" render={() => (
-              <div>
-                404 NOT FOUND
-              </div>
-            )} />
-          </Switch>
-        </div>
-      </div>
-    );
-    */
+    )
   }
 }
 
